@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <head>
 	<meta charset="UTF-8">
-	<title>龙龙我爱你</title>
+	<title>小可爱我爱你</title>
 
 
 	<style>
@@ -79,7 +79,7 @@
 			if(val > 1 && val <= 3){
 				return '爱你一辈子';
 			} else if(val > 3 && val <= 5){
-				return '龙龙';
+				return '小可爱';
 			} else if(val > 5 && val <= 8){
 				return '喜欢你';
 			} else{
