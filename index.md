@@ -1,37 +1,190 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<head>
+	<meta charset="UTF-8">
+	<title>刘亦菲我爱你</title>
 
-You can use the [editor on GitHub](https://github.com/liunianzzz/liunianzzz.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+	<style>
+		*{margin:0; padding:0;}
+		body{ background-color: #1E1E1E; 		}
+	</style>
+</head>
+<body>
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+<audio autoplay="autopaly">
+<source src="http://t.hunlipic.com/?wky" type="audio/mp3"/>
+</audio>
 
-```markdown
-Syntax highlighted code block
+	<canvas id="drawHeart"></canvas>
 
-# Header 1
-## Header 2
-### Header 3
+	<script>
+		var hearts = [];
+		var canvas = document.getElementById('drawHeart');
+		var wW = window.innerWidth;
+		var wH = window.innerHeight;
+		// 创建画布
+		var ctx = canvas.getContext('2d');
+		// 创建图片对象
+		var heartImage = new Image();
+		heartImage.src = 'http://h5.hunlipic.com/biaobai_aixin/img/heart.svg';
+		var num = 100;
 
-- Bulleted
-- List
+		init();
 
-1. Numbered
-2. List
+		window.addEventListener('resize', function(){
+			 wW = window.innerWidth;
+			 wH = window.innerHeight;
+		});
+		// 初始化画布大小
+		function init(){
+			canvas.width = wW;
+			canvas.height = wH;
+			for(var i = 0; i < num; i++){
+				hearts.push(new Heart(i%5));
+			}
+			requestAnimationFrame(render);
+		}
 
-**Bold** and _Italic_ and `Code` text
+		function getColor(){
+			var val = Math.random() * 10;
+			if(val > 0 && val <= 1){
+				return '#00f';
+			} else if(val > 1 && val <= 2){
+				return '#f00';
+			} else if(val > 2 && val <= 3){
+				return '#0f0';
+			} else if(val > 3 && val <= 4){
+				return '#368';
+			} else if(val > 4 && val <= 5){
+				return '#666';
+			} else if(val > 5 && val <= 6){
+				return '#333';
+			} else if(val > 6 && val <= 7){
+				return '#f50';
+			} else if(val > 7 && val <= 8){
+				return '#e96d5b';
+			} else if(val > 8 && val <= 9){
+				return '#5be9e9';
+			} else {
+				return '#d41d50';
+			}
+		}
 
-[Link](url) and ![Image](src)
-```
+		function getText(){
+			var val = Math.random() * 10;
+			if(val > 1 && val <= 3){
+				return '爱你一辈子';
+			} else if(val > 3 && val <= 5){
+				return '刘亦菲';
+			} else if(val > 5 && val <= 8){
+				return '喜欢你';
+			} else{
+				return 'I Love You';
+			}
+		}
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+		function Heart(type){
+			this.type = type;
+			// 初始化生成范围
+			this.x = Math.random() * wW;
+			this.y = Math.random() * wH;
 
-### Jekyll Themes
+			this.opacity = Math.random() * .5 + .5;
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/liunianzzz/liunianzzz.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+			// 偏移量
+			this.vel = {
+				x: (Math.random() - .5) * 5,
+				y: (Math.random() - .5) * 5
+			}
 
-### Support or Contact
+			this.initialW = wW * .5;
+			this.initialH = wH * .5;
+			// 缩放比例
+			this.targetScale = Math.random() * .15 + .02; // 最小0.02
+			this.scale = Math.random() * this.targetScale;
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+			// 文字位置
+			this.fx = Math.random() * wW;
+			this.fy = Math.random() * wH;
+			this.fs = Math.random() * 10;
+			this.text = getText();
+
+			this.fvel = {
+				x: (Math.random() - .5) * 5,
+				y: (Math.random() - .5) * 5,
+				f: (Math.random() - .5) * 2
+			}
+		}
+
+		Heart.prototype.draw = function(){
+			ctx.save();
+			ctx.globalAlpha = this.opacity;
+			ctx.drawImage(heartImage, this.x, this.y, this.width, this.height);
+			ctx.scale(this.scale + 1, this.scale + 1);
+  			if(!this.type){
+  				// 设置文字属性
+				ctx.fillStyle = getColor();
+	  			ctx.font = 'italic ' + this.fs + 'px sans-serif';
+	  			// 填充字符串
+	  			ctx.fillText(this.text, this.fx, this.fy);
+  			}
+			ctx.restore();
+		}
+		Heart.prototype.update = function(){
+			this.x += this.vel.x;
+			this.y += this.vel.y;
+
+			if(this.x - this.width > wW || this.x + this.width < 0){
+				// 重新初始化位置
+				this.scale = 0;
+				this.x = Math.random() * wW;
+				this.y = Math.random() * wH;
+			}
+			if(this.y - this.height > wH || this.y + this.height < 0){
+				// 重新初始化位置
+				this.scale = 0;
+				this.x = Math.random() * wW;
+				this.y = Math.random() * wH;
+			}
+
+			// 放大
+			this.scale += (this.targetScale - this.scale) * .1;
+			this.height = this.scale * this.initialH;
+			this.width = this.height * 1.4;
+
+			// -----文字-----
+			this.fx += this.fvel.x;
+			this.fy += this.fvel.y;
+			this.fs += this.fvel.f;
+
+			if(this.fs > 50){
+				this.fs = 2;
+			}
+
+			if(this.fx - this.fs > wW || this.fx + this.fs < 0){
+				// 重新初始化位置
+				this.fx = Math.random() * wW;
+				this.fy = Math.random() * wH;
+			}
+			if(this.fy - this.fs > wH || this.fy + this.fs < 0){
+				// 重新初始化位置
+				this.fx = Math.random() * wW;
+				this.fy = Math.random() * wH;
+			}
+		}
+
+		function render(){
+			ctx.clearRect(0, 0, wW, wH);
+			for(var i = 0; i < hearts.length; i++){
+				hearts[i].draw();
+				hearts[i].update();
+			}
+			requestAnimationFrame(render);
+		}
+	</script>
+</body>
+</html>
