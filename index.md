@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -26,7 +26,7 @@
 		var canvas = document.getElementById('drawHeart');
 		var wW = window.innerWidth;
 		var wH = window.innerHeight;
-		// 创建画布
+		// 创建画布111
 		var ctx = canvas.getContext('2d');
 		// 创建图片对象
 		var heartImage = new Image();
